@@ -1,11 +1,14 @@
 <?php
 
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
 //redson for work with redis
 //TODO: move to this main template php
 include 'Redson.php';
 
-error_reporting(E_ALL);
-ini_set("display_errors", 1);
+$redis = new Redson\Redis();
+$keys = $redis->keys('*'); 
+
 
 function name() {
 	return 'redisAdminer';
@@ -34,7 +37,7 @@ function head($title) {
 /**
  * TODO: add helpfull buttons
  * [footer description]
- * @return [type] [description]
+ * @return [type] [description]1
  */
 function footer() {
 	$footer = "<footer id=\"footer\"><div class=\"innertube\"><p>Help buttons</p></div>";
@@ -53,7 +56,7 @@ function endhead() {
  */
 function contentHeader() {
 	$html = "<body><header id=\"header\"><div class=\"innertube\">";
-	$html .= "<p>".name()."</p>";
+	$html .= "<p>".name()." ".version()."</p>";
 	$html .= "</div></header>";
 	echo $html;
 }
@@ -70,12 +73,14 @@ function leftMenu() {
 	echo $html;	
 }
 
+//html this start
 head('redisAdminer');
 	
 	contentHeader();
+
 	$content = <<<CONTENT
 				
-		<main>
+		<main>{$who}
 			<div class="innertube">
 				
 				<h1>Heading</h1>
@@ -93,3 +98,4 @@ CONTENT;
 		footer();
 			
 endhead();
+//html this end
