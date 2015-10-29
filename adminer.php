@@ -7,14 +7,17 @@ ini_set("display_errors", 1);
 include 'Redson.php';
 
 $redis = new Redson\Redis();
-$keys = $redis->keys('*'); 
-
+$arKeys = $redis->keys('*'); //all keys in db
 
 function name() {
 	return 'redisAdminer';
 }
 function version() {
 	return '0.1';
+}
+
+function debug_print(array $var){
+	echo "<pre>".print_r($var)."</pre>";
 }
 
 /**
@@ -61,21 +64,22 @@ function contentHeader() {
 	echo $html;
 }
 
-function leftMenu() {
+function leftMenu(array $keys) {
+	if(is_array($keys)){
+		$html = "<nav id=\"nav\"><div class=\"innertube\">";
+		$html .= "<h1>Keys</h1><ul>";
+		foreach($keys as $key){
+			$html .= "<li><a href=\"#\">" . $key . "</a></li>";
+		}
+		$html .= "</ul></div></nav>";	
 
-	$html = "<nav id=\"nav\"><div class=\"innertube\">";
-	$html .= "<h1>Keys</h1><ul>";
-	$html .= "<li><a href=\"#\">Link 1</a></li>";
-	$html .= "<li><a href=\"#\">Link 2</a></li>";
-	$html .= "<li><a href=\"#\">Link 3</a></li>";
-	$html .= "</ul></div></nav>";	
-
-	echo $html;	
+		echo $html;	
+	}
 }
 
 //html this start
 head('redisAdminer');
-	
+	$keys = $redis->keys('*');
 	contentHeader();
 
 	$content = <<<CONTENT
@@ -93,7 +97,7 @@ head('redisAdminer');
 CONTENT;
 		echo $content;
 
-		leftMenu();
+		leftMenu($arKeys);
 
 		footer();
 			
