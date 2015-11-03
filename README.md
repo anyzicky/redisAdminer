@@ -7,5 +7,13 @@ Try make php Adminer MySQL analog for Redis DB
 Just single script for administrate Redis DB server. 
 
 ###TODO
-~progress..
+- [] Choose server
+- [] Delete key
+- [] Update key
+- [] Export/Import
+- [] Add user command (web console)
+- [] Add choose type
+- [] Show type key
+- [] Choose language inrerface
+- [] Information about server
 
