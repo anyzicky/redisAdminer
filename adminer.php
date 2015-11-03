@@ -73,6 +73,34 @@ function serverInfo(){
 
 	return $arInfo;
 }
+
+function console ($cmd = ''){
+
+	global $redis;
+
+	$html = "<p>Console</p><form action='' method='get'>";
+	$html .= "<input type='hidden' name='type' value='console' />";
+	$html .= "<p><textarea rows='10' cols='90' name='cmd'>";
+	if(isset($_REQUEST['cmd'])) 
+		$html .= $_REQUEST['cmd'];
+	else
+		$html .= 'info';
+	$html .= "</textarea></p>";
+	$html .= "<p><input type='submit' name='go' value='Execute'/></p>";
+	$html .= "</form>";
+
+	if(!empty($cmd)) {
+
+		$result = $redis->$cmd();
+		if(is_array($result)){
+			$result = implode(' ',$result);
+		}
+		$html .= "<p>".nl2br($result)."</p>";
+	}
+
+	return $html;
+}
+
 /* end view functions */
 
 /* start content functions */
@@ -150,6 +178,11 @@ head('redisAdminer');
 			break;
 		case 'info':
 			echo nl2br(serverInfo());
+			break;
+		case 'console':
+			$cmd = '';
+			if(isset($_REQUEST['cmd'])) $cmd = $_REQUEST['cmd'];
+			echo console($cmd);
 			break;
 		default:
 			# code...
