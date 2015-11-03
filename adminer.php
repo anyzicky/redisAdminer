@@ -140,7 +140,7 @@ function endhead() {
  */
 function contentHeader() {
 	$html = "<body><header id=\"header\"><div class=\"innertube\">";
-	$html .= "<p>".name()." ".version()."</p>";
+	$html .= "<p><a href='" . $_SERVER['PHP_SELF'] . "'>" . name() . " " . version() . "</a></p>";
 	$html .= "</div></header>";
 	echo $html;
 }
@@ -169,7 +169,8 @@ head('redisAdminer');
 	echo $contentHead;
 
 	//page content
-	switch ($_REQUEST['type']) {
+	if(isset($_REQUEST['type'])){
+		switch ($_REQUEST['type']) {
 		case 'key':
 			if($_REQUEST['do'] == 'add')
 				echo keyAdd();
@@ -187,6 +188,7 @@ head('redisAdminer');
 		default:
 			# code...
 			break;
+	}
 	}
 
 	$contentFooter = "</div></main>";

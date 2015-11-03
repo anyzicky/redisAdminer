@@ -17,4 +17,5 @@ Just single script for administrate Redis DB server.
 - [] Show type key
 - [] Choose language interface
 - [x] Information about server
+- [] merge css and redis-api with main file
 
