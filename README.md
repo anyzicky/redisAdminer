@@ -1,4 +1,5 @@
 # redisAdminer
+Single file PHP Redis DB manager
 
 ## For What?
 Try make php Adminer MySQL analog for Redis DB
@@ -15,5 +16,5 @@ Just single script for administrate Redis DB server.
 - [] Add choose type
 - [] Show type key
 - [] Choose language inrerface
-- [] Information about server
+- [x] Information about server
 

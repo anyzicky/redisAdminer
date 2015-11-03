@@ -9,6 +9,8 @@ include 'Redson.php';
 $redis = new Redson\Redis();
 $arKeys = $redis->keys('*'); //all keys in db
 
+/* start adminer functions*/
+
 function name() {
 	return 'redisAdminer';
 }
@@ -20,7 +22,17 @@ function debug_print(array $var){
 	echo "<pre>".print_r($var)."</pre>";
 }
 
+/**
+ * TODO: set in main php file
+ * @return [type] [description]
+ */
+function style() {
+	echo "<link rel=\"stylesheet\" href=\"style.css\">";
+}
 
+/* end adminer functions */
+
+/* view functions */
 function keyAdd() {
 	$html = "<p><b>Add key</b></p><div claass='add-key'>";
 	$html .= "<form action='' method='POST' >";
@@ -53,13 +65,17 @@ function keyInfo($key) {
 	$html .= "</tbody></table>";
 	return $html;
 }
-/**
- * TODO: set in main php file
- * @return [type] [description]
- */
-function style() {
-	echo "<link rel=\"stylesheet\" href=\"style.css\">";
+
+function serverInfo(){
+	global $redis;
+
+	$arInfo = $redis->info('server');
+
+	return $arInfo;
 }
+/* end view functions */
+
+/* start content functions */
 
 function head($title) {
 	$head = "<!DOCTYPE html><html><head>";
@@ -78,6 +94,8 @@ function head($title) {
 function footer() {
 	$footer = "<footer id=\"footer\"><div class=\"innertube\">";
 	$footer .= "<a href='?type=key&do=add'>[Add key]</a>";
+	$footer .= "<a href='?type=console&do=view'>[Console]</a>";
+	$footer .= "<a href='?type=info&do=view'>[Information]</a>";
 	$footer .= "</div>";
 	$footer .= "</footer>";
 	echo $footer;
@@ -112,6 +130,8 @@ function leftMenu(array $keys) {
 	}
 }
 
+/* end content functions */
+
 //html this start
 head('redisAdminer');
 	$keys = $redis->keys('*');
@@ -128,7 +148,9 @@ head('redisAdminer');
 			if($_REQUEST['do'] == 'view')
 				echo keyInfo($_REQUEST['key']);
 			break;
-		
+		case 'info':
+			echo nl2br(serverInfo());
+			break;
 		default:
 			# code...
 			break;
