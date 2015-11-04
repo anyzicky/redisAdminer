@@ -15,7 +15,8 @@ Just single script for administrate Redis DB server.
 - [] Add user command (web console)
 - [] Add choose type
 - [] Show type key
-- [] Choose language interface
+- [x] Choose language interface (Support user translate params)
 - [x] Information about server
 - [] merge css and redis-api with main file
+- [] fix global space
 

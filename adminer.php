@@ -2,6 +2,22 @@
 
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
+
+//lang
+
+//rus
+/*$arLang['ADD_KEY'] = 'Добавить ключ';
+$arLang['VIEW_KEY'] = 'Просмотр';
+$arLang['CONSOLE'] = 'Консоль';
+$arLang['CONSOLE_SUBMIT'] = 'Выполнить';
+$arLang['INFORMATION'] = 'Информация';*/
+//eng
+$arLang['ADD_KEY'] = 'Add key';
+$arLang['VIEW_KEY'] = 'View key';
+$arLang['CONSOLE'] = 'Console';
+$arLang['CONSOLE_SUBMIT'] = 'Execute';
+$arLang['INFORMATION'] = 'Information';
+
 //redson for work with redis
 //TODO: move to this main template php
 include 'Redson.php';
@@ -34,7 +50,8 @@ function style() {
 
 /* view functions */
 function keyAdd() {
-	$html = "<p><b>Add key</b></p><div claass='add-key'>";
+	global $arLang;
+	$html = "<p><b>".$arLang['ADD_KEY']."</b></p><div claass='add-key'>";
 	$html .= "<form action='' method='POST' >";
 	//$html .= "<p><label for='type'>Type</label></p>";
 
@@ -48,9 +65,9 @@ function keyAdd() {
 }
 
 function keyInfo($key) {
-	global $redis;
+	global $redis, $arLang;
 
-	$html = "<p><b>View key</b></p><table>";
+	$html = "<p><b>".$arLang['VIEW_KEY']."</b></p><table>";
 	$html .= "<thead><th>Type</th><th>Size</th><th>Value</th><th>Operations</th></thead><tbody>";
 	if(strlen($key)){
 		$val = $redis->get($key);
@@ -76,9 +93,9 @@ function serverInfo(){
 
 function console ($cmd = ''){
 
-	global $redis;
+	global $redis, $arLang;
 
-	$html = "<p>Console</p><form action='' method='get'>";
+	$html = "<p>".$arLang['CONSOLE']."</p><form action='' method='get'>";
 	$html .= "<input type='hidden' name='type' value='console' />";
 	$html .= "<p><textarea rows='10' cols='90' name='cmd'>";
 	if(isset($_REQUEST['cmd'])) 
@@ -86,7 +103,7 @@ function console ($cmd = ''){
 	else
 		$html .= 'info';
 	$html .= "</textarea></p>";
-	$html .= "<p><input type='submit' name='go' value='Execute'/></p>";
+	$html .= "<p><input type='submit' name='go' value='".$arLang['CONSOLE_SUBMIT']."'/></p>";
 	$html .= "</form>";
 
 	if(!empty($cmd)) {
@@ -120,10 +137,12 @@ function head($title) {
  * @return [type] [description]1
  */
 function footer() {
+	global $arLang;
+
 	$footer = "<footer id=\"footer\"><div class=\"innertube\">";
-	$footer .= "<a href='?type=key&do=add'>[Add key]</a>";
-	$footer .= "<a href='?type=console&do=view'>[Console]</a>";
-	$footer .= "<a href='?type=info&do=view'>[Information]</a>";
+	$footer .= "<a href='?type=key&do=add'>[".$arLang['ADD_KEY']."]</a>";
+	$footer .= "<a href='?type=console&do=view'>[".$arLang['CONSOLE']."]</a>";
+	$footer .= "<a href='?type=info&do=view'>[".$arLang['INFORMATION']."]</a>";
 	$footer .= "</div>";
 	$footer .= "</footer>";
 	echo $footer;
